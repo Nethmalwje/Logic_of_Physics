@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function Quiz() {
+  const [quiz, setQuiz] = useState([]);
+  const [answers, setAnswers] = useState([]);
+
+  const client = axios.create({
+    baseURL: "http://localhost:4000",
+  });
+
+  const fetchData = async () => {
+    const response = await client.get(`/quizes/:quizID`);
+    setQuiz(response.data);
+  };
+
+  useEffect(() => {
+    fetchData(1);
+  }, []);
+
   return (
     <div className="grid grid-cols-6 gap-2 mt-10 mx-auto rounded-lg w-3/4">
       <div className="col-span-1 bg-slate-400 rounded-md flex items-center justify-center text-white">

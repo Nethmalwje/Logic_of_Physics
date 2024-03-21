@@ -1,24 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import img1 from "./thusith.png";
 import axios from "axios";
+import AuthContext from "./context/AuthProvider";
+import useAuth from "../hooks/useAuth";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function Login() {
+  const { auth, setAuth } = useAuth(); //useContext(AuthContext); //now we can update the authstate in the global context
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/home";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     console.log("clicked");
 
-    axios
+    const response = await axios
       .post("http://localhost:4000/login", {
         username: email,
         password: password,
       })
-      .then((res) => console.log(res))
+      //.then((res) => console.log(res))
       .catch((err) => console.log(err));
-  }
+    //console.log(JSON.stringify(response?.data));
+    const roles = response?.data?.roles;
+    const loggedIn = response?.data?.loggedIn;
+    setAuth({
+      email: email,
+      password: password,
+      roles: [2002],
+      loggedIn: loggedIn,
+    });
+    console.log(auth);
+    console.log(loggedIn);
+    console.log(auth);
+    navigate(from, { replace: true });
+  };
 
   return (
     <div>

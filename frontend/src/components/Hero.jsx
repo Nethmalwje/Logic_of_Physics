@@ -7,10 +7,10 @@ function Hero() {
       <div className="container flex flex-col-reverse  lg:flex-row items-center gap-1 mt-14 lg:mt-28 ">
         <div className="ml-20 flex flex-1 flex-col items-center lg:items-start ">
           <h2 className="text-bookmark-blue text-3xl md:text-4 lg:text-5xl text-center lg:text-left mb-6 ">
-            A simple bookmark managers
+            Leran Physics in a new way
           </h2>
           <p className="text-bookmark-grey text-lg text-center lg:text-left mb-6">
-            blaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            Join Logic Of Physics Today
           </p>
           <div className="flex justify-center flex-wrap gap-6  ">
             <button

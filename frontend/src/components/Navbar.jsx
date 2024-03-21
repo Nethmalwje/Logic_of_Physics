@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -29,18 +30,24 @@ function Navbar() {
                     </a>
                   </li>
                   <li className="cursor-pointer">
-                    <a className="text-gray-800 transition hover:text-gray-800/75">
+                    <Link to={`/lesson`}>
                       {" "}
-                      content
-                    </a>
+                      <a className="text-gray-800 transition hover:text-gray-800/75">
+                        {" "}
+                        LMS
+                      </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>
             </div>
             <div className="gap-4 flex">
-              <button className="btn btn-purple hover:bg-bookmark-white hover:text-bookmark-purple ">
-                Login
-              </button>
+              <Link to="/Login">
+                {" "}
+                <button className="btn btn-purple hover:bg-bookmark-white hover:text-bookmark-purple ">
+                  Login
+                </button>
+              </Link>
               <div className="block md:hidden">
                 <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
                   <svg

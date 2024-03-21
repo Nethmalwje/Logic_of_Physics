@@ -10,6 +10,15 @@ import Youtube from "./components/Youtube";
 import Video from "./components/Video";
 import Gradient from "./components/Gradient";
 import Register from "./components/Resgister";
+import VideoPlayer from "./components/VideoPlayer";
+import CoursePage from "./components/Courses";
+import { Routes, Route } from "react-router-dom";
+import PageNotFound from "./components/PageNotFound";
+import LandingPage from "./components/LandingPAge";
+import Lessonpage from "./components/Lessonpage";
+import Layout from "./components/Layout";
+import RequireAuth from "./components/RequireAuth3";
+import Unauthorized from "./components/Unauthorized";
 
 //function()
 
@@ -23,15 +32,37 @@ function App() {
         </div>
         <div class="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_60%,#63e_100%)]"></div>
       </div>
-      <Navbar />
-      <ImageSlider />
-      <Hero />
-      <Login />
-      <Login2 />
-      {/* <Quiz /> */}
-      <Footer />
-      {/* <Youtube /> */}
-      <Register />
+
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          {/* public routes */}
+          <Route path="Home" element={<LandingPage />} />
+          <Route path="Login" element={<Login />} />
+
+          {/* private Routes */}
+          <Route element={<RequireAuth allowedRoles={[2001]} />}>
+            <Route path="lesson/:lessonID" element={<CoursePage />} />
+            <Route path="course/:courseID" element={<VideoPlayer />} />
+            <Route
+              path="lesson/:lessonID/course/:courseID"
+              element={<VideoPlayer />}
+            />
+          </Route>
+        </Route>
+        <Route path="/lesson" element={<Lessonpage />} />
+
+        {/* <Route path="/" element={<LandingPage />} />
+        <Route path="Login" element={<Login />} />
+        <Route path="/lesson" element={<Lessonpage />} />
+        <Route path="lesson/:lessonID" element={<CoursePage />} />
+        <Route path="course/:courseID" element={<VideoPlayer />} />
+        <Route
+          path="lesson/:lessonID/course/:courseID"
+          element={<VideoPlayer />}
+        /> */}
+        <Route path="/unautherized" element={<Unauthorized />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
     </div>
   );
 }
