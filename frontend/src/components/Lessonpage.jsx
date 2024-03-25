@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import LessonCard from "./LessonCard";
+import SkilledLearning from "./abc";
 
 export default function CoursePage() {
   const [LessonData, setLessondata] = useState([]);
@@ -24,7 +26,7 @@ export default function CoursePage() {
       <div className="text-left mt-20 mx-auto px-4 max-w-screen-lg md:px-8">
         <h1 className="text-3xl text-gray-800 font-semibold">Blog</h1>
       </div>
-      <section className="mt-2 mx-auto px-4 max-w-screen-lg md:px-8 ">
+      {/* <section className="mt-2 mx-auto px-4 max-w-screen-lg md:px-8 ">
         <div className="my-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {LessonData.map((items) => (
             <article
@@ -75,7 +77,12 @@ export default function CoursePage() {
             </article>
           ))}
         </div>
-      </section>
+      </section> */}
+      {LessonData.map((items) => (
+        <LessonCard name={items.lesson_name} lessonid={items.lessonid} />
+      ))}
+      {/* <SkilledLearning /> */}
+      {/* <PopularLssons /> */}
     </div>
   );
 }

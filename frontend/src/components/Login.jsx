@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import img1 from "./thusith.png";
 import axios from "axios";
 import AuthContext from "./context/AuthProvider";
@@ -32,7 +32,7 @@ function Login() {
     setAuth({
       email: email,
       password: password,
-      roles: [2002],
+      roles: roles,
       loggedIn: loggedIn,
     });
     console.log(auth);
@@ -40,6 +40,9 @@ function Login() {
     console.log(auth);
     navigate(from, { replace: true });
   };
+  useEffect(() => {
+    console.log("Auth state updated:", auth);
+  }, [auth]);
 
   return (
     <div>

@@ -3,6 +3,8 @@ import axios from "axios";
 import Popup from "reactjs-popup";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
+import img from "./video.png";
+import play from "./play.png";
 
 function VideoPlayer() {
   const [video, setVideo] = useState("");
@@ -62,7 +64,7 @@ function VideoPlayer() {
             ></iframe>
           </div>
 
-          <h1 className="text-gray-700 mt-4">
+          <h1 className="text-gray-700 mt-4 text-2xl">
             {video.title} {video.link}
           </h1>
           <p className="text-gray-700 mt-4">{video.description}</p>
@@ -80,9 +82,10 @@ function VideoPlayer() {
                   onClick={() => handleClick(videotitle)}
                 >
                   <img
-                    src="https://via.placeholder.com/64"
+                    //src="https://via.placeholder.com/64"
+                    src={play}
                     alt="Next Video Thumbnail"
-                    className="w-16 h-16 rounded-lg"
+                    className="w-12 h-12 rounded-lg"
                   />
                   <span className="text-gray-800">{videotitle.title}</span>
                 </a>
@@ -102,9 +105,10 @@ function VideoPlayer() {
                   onClick={handleClickQuiz}
                 >
                   <img
-                    src="https://via.placeholder.com/64"
+                    src={img}
+                    //src="https://via.placeholder.com/64"
                     alt="Next Video Thumbnail"
-                    className="w-16 h-16 rounded-lg"
+                    className="w-12 h-12 rounded-lg"
                   />
                   <span className="text-gray-800">{quiztitle.quizid}</span>
                 </a>
