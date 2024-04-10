@@ -7,11 +7,14 @@ import { Strategy } from "passport-local";
 import session from "express-session";
 import cors from "cors";
 import env from "dotenv";
+import multer from "multer";
+import path from "path";
 
 const app = express();
 const port = 4000;
 const saltRounds = 10;
 env.config();
+app.use(express.urlencoded({ extended: false }))
 
 app.use(
   session({
@@ -25,7 +28,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "http://localhost:3001"],
     credentials: true, // This allows cookies to be sent to the server
   })
 ); //find out more about these
@@ -68,6 +71,7 @@ app.post(
   passport.authenticate("local", {
     successRedirect: false, //put false to stop automatic redirection but we can chage tis to "/get" routes
     failureRedirect: false,
+    
   }),
 
   function (req, res) {
@@ -157,6 +161,216 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((user, cb) => {
   cb(null, user);
 });
+
+
+// adding image to feedback
+const storage = multer.diskStorage({
+  destination:'./Upload/images',
+  filename: (req, file, cb) =>  {
+    return cb(null, `${file.fieldname}_${Date.now()}_${path.extname(file.originalname)}`);
+
+}
+
+
+})
+
+
+const upload = multer ({storage:storage})
+
+app.use('/images',express.static('./Upload/images'))
+
+app.post("/upload", upload.single('feedback'), (req, res) => {
+  console.log('successfully uploaded');
+  res.json({
+      success: 1,
+      image_url: `http://localhost:${port}/images/${req.file.filename}`
+  })
+})
+
+
+
+// adding a feedback to databse via admin
+
+app.post ('/addfeedback', async(req,res)=>{
+  const {name , email, message,image} = req.body;
+
+  try {
+    const result = await db.query(
+      'INSERT INTO feedback(name, email, message,image) VALUES($1, $2, $3, $4) RETURNING *',
+      [name, email, message,image]
+    );
+    res.status(201).json(result.rows[0]);
+    console.log('Logged to the table Feedback');
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+}
+
+
+
+
+
+)
+
+// fetching feedbacks from datbase
+
+app.get('/getfeedbacks',async(req,res)=>{
+  try{
+    const result = await db.query('select id, name , email , message ,image FROM feedback ')
+    res.json(result.rows)
+
+
+  }catch(error){
+    console.log(error);
+
+  }
+})
+
+// add to quiz list
+
+// pllaha eka wenama ghnwnm use krnn
+
+// app.post ('/addQuiz', async(req,res)=>{
+//   const {courseid,quizname} = req.body;
+
+//   try {
+//     const result = await db.query(
+//       'INSERT INTO quizlist(courseid,quizname) VALUES($1, $2) RETURNING *',
+//       [courseid,quizname]
+//     );
+//     res.status(201).json(result.rows[0]);
+//     console.log('Logged to the table Quizlist');
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send('Server error');
+//   }
+// })
+
+
+app.post('/addQuiz', async (req, res) => {
+  const { courseid } = req.body;
+
+  try {
+    // Insert into quizzes table and return the quizid of the newly inserted row
+    const result = await db.query(
+      'INSERT INTO quizzes(courseid) VALUES($1) RETURNING quizid',
+      [courseid]
+    );
+
+    // Assuming the insert was successful, result.rows[0] will contain the quizid
+    const quizId = result.rows[0].quizid;
+
+    // Respond with the quizId
+    res.status(201).json({ quizId: quizId });
+    console.log('Logged to the table Quizzes, quizId:', quizId);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+
+// quizzes part
+
+const Quizstorage = multer.diskStorage({
+  destination:'./Upload/Qimages',
+  filename: (req, file, cb) =>  {
+    return cb(null, `${file.fieldname}_${Date.now()}_${path.extname(file.originalname)}`);
+
+}
+
+
+})
+
+
+const Qupload = multer ({storage:Quizstorage})
+
+app.use('/Qimages',express.static('./Upload/Qimages'))
+
+app.post("/Qupload", Qupload.single('Qimage'), (req, res) => {
+  console.log('successfully uploaded');
+  res.json({
+      success: 1,
+      image_url: `http://localhost:${port}/Qimages/${req.file.filename}`
+  })
+})
+
+
+app.post ('/addQuestion', async(req,res)=>{
+  const {quizid,image,answer} = req.body;
+
+  try {
+    const result = await db.query(
+      'INSERT INTO questions(quizid,image,answer) VALUES($1, $2,$3) RETURNING *',
+      [quizid,image,answer]
+    );
+    res.status(201).json(result.rows[0]);
+    console.log('Logged to the table Feedback');
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+}
+
+
+
+
+
+)
+
+
+app.get('/getQuestions/:quizId', async (req, res) => {
+  const { quizId } = req.params;
+  try {
+    const result = await db.query(`SELECT questionid, image, answer FROM questions WHERE quizid = $1`, [quizId]);
+    const questionsList = result.rows.map(row=>(
+      {
+        id: row.questionid,
+        image:row.image,
+        answer:row.answer
+      }
+    ))
+    res.json(questionsList)
+    console.log('questionslist successfully passed to front end');
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
+// get the quizzes under create quiz button
+
+app.get('/getQuizList', async (req, res) => {
+  try {
+    const result = await db.query("SELECT quizid FROM quizzes WHERE courseid = '2'");
+    const quizIds = result.rows.map(row => row.quizid);
+    res.json(quizIds);
+    console.log('successfully passed the quizlist to front');
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// add videos through admin
+
+app.post('/addvideo',async(req,res)=>{
+  const {title,videolink,courseid} = req.body;
+
+  try{
+    await db.query('INSERT INTO videos (videolink,title,courseid) VALUES ($1 , $2 ,$3) RETURNING * ',
+    [videolink,title,courseid])
+
+  }catch (error) {
+    console.error('Error adding video:', error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+
+})
+
 
 //listening on port 4000--------------------------------------------
 app.listen(port, () => {

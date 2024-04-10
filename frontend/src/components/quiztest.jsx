@@ -6,7 +6,7 @@ function Quiz() {
         01
         <div className="info">
           <h3>Queston 1</h3>
-          <p> className="marks">allocated marks -2 </p>
+          <p> className="marks"allocated marks -2 </p>
         </div>
       </div>
 

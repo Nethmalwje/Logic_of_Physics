@@ -1,5 +1,11 @@
 import React from "react";
 import iMg from "./thusith.png";
+import Feedback from "./Feedback";
+import Feedbacklist from "./Feedbcklist";
+import Myfeedback from "./Myfeedback";
+
+
+
 
 function Hero() {
   return (
@@ -34,6 +40,12 @@ function Hero() {
             alt="thusith image"
           />
         </div>
+      </div>
+      <div>
+        <Feedbacklist/>
+       
+       
+       
       </div>
     </section>
   );

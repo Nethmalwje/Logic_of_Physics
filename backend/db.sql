@@ -8,3 +8,23 @@ CREATE TABLE users (
 );
 
 
+create table feedback (
+	id serial primary key,
+name varchar(50) not null,
+email varchar (100) not null,
+	message text not null
+)
+
+CREATE TABLE quizzes (
+    quizid SERIAL PRIMARY KEY,
+    courseid VARCHAR(255),
+    
+);
+
+CREATE TABLE questions (
+    questionid SERIAL PRIMARY KEY,
+    
+    image TEXT,
+    answer INTEGER,
+   quizid integer  REFERENCES quizzes(quizid)
+);
