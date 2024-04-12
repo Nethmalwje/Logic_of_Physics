@@ -1,13 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 
 function Navbar() {
   return (
     <div className="  fixed z-10 top-0 left-0 w-full py-0 mt-0 sm:mt-0 ">
-      <header className="bg-violet-50">
+      <header className="fixed w-full z-10 top-0  transition-all duration-300  bg-violet-50 bg-opacity-65 shadow-xl backdrop-blur-md">
         <div className="mx-auto max-w-screen-xl px-5 sm:px-8 lg:px-8">
           <div className=" flex h-16 items-center justify-between">
-            <div className="md:gap-12">logo</div>
+            <div className="md:gap-12">
+              <Link to={`/home`}>
+                {" "}
+                <a className="text-black font-bold text-xl transition"> Logo</a>
+              </Link>
+            </div>
             <div className="hidden md:block">
               <nav aria-label="Global">
                 <ul className="flex items-center gap-6 text-sm ">
@@ -18,10 +24,18 @@ function Navbar() {
                     </a>
                   </li>
                   <li className="cursor-pointer">
-                    <a className="text-gray-800 transition hover:text-gray-800/75">
-                      {" "}
-                      content
-                    </a>
+                    <ScrollLink
+                      to="HowWorks"
+                      spy={true}
+                      smooth={true}
+                      offset={-100}
+                      duration={500}
+                    >
+                      <a className="text-gray-800 transition hover:text-gray-800/75">
+                        {" "}
+                        How It Works
+                      </a>
+                    </ScrollLink>
                   </li>
                   <li className="cursor-pointer">
                     <a className="text-gray-800 transition hover:text-gray-800/75">

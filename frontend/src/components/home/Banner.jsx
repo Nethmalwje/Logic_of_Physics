@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import img1 from "./thusi1.png";
+import { Link } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 
 function Banner() {
   return (
@@ -31,19 +33,28 @@ function Banner() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4 text-center">
-            <a
-              href="#"
-              className="block w-full rounded bg-orange-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
+            <Link to={"/lesson"}>
+              <a
+                href="#"
+                className="block w-full rounded bg-orange-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
+              >
+                Get Started
+              </a>
+            </Link>
+            <ScrollLink
+              to="Stat"
+              spy={true}
+              smooth={true}
+              offset={-100}
+              duration={500}
             >
-              Get Started
-            </a>
-
-            <a
-              href="#"
-              className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto"
-            >
-              Learn More
-            </a>
+              <a
+                href="#"
+                className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto"
+              >
+                Learn More
+              </a>
+            </ScrollLink>
           </div>
         </div>
       </div>

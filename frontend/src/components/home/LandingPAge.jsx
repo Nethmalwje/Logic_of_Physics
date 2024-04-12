@@ -7,16 +7,24 @@ import Login2 from "../LoginS";
 import Footer from "../Footer";
 import PopularLssons from "./PopularLessons";
 import Banner from "./Banner";
+import Stat from "./Stat";
+import HowItWorks from "./HowitWorks";
+import FooterL from "./FooterL";
+import Testamonials from "./Testamonials";
+import Filter from "../LessonPage/Filter";
 export default function LandingPage() {
   return (
     <div>
       <Navbar />
       <Banner />
       <PopularLssons />
-      {/* <ImageSlider /> */}
+      <Stat />
       <Hero />
+      <HowItWorks />
+      <Testamonials />
+      {/* <ImageSlider /> */}
 
-      <Footer />
+      <FooterL />
     </div>
   );
 }

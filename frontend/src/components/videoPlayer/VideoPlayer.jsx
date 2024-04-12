@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import { useParams } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import img from "./video.png";
 import play from "./play.png";
 
@@ -52,7 +52,7 @@ function VideoPlayer() {
   return (
     <div className="pt-5 px-5">
       <div className="flex flex-col md:flex-row justify-center items-start gap-8 md:gap-12">
-        <div className="flex-shrink-0 w-full md:w-2/3">
+        <div className="flex-shrink-0 w-full md:w-2/3 bg-white shadow-lg">
           <div className="relative" style={{ paddingTop: "56.25%" }}>
             {/* The aspect ratio for 16:9 video */}
             <iframe
@@ -63,11 +63,29 @@ function VideoPlayer() {
               frameBorder="0"
             ></iframe>
           </div>
-
-          <h1 className="text-gray-700 mt-4 text-2xl">
-            {video.title} {video.link}
-          </h1>
-          <p className="text-gray-700 mt-4">{video.description}</p>
+          <div className="bg-white break-words p-10 shadow-lg">
+            <hr />
+            <div className="text-gray-700 mt-4 text-2xl font-bold">
+              {video.title} {video.link}
+            </div>
+            <p className="text-gray-700 mt-4 text-xl">
+              {video.description}
+              වර්ගීක ව්‍යාකරණය විශ්වාසයෙන් ස්ථාපනය සහ ස්ථාවරයෙන් හෝ ස්ථාපනයෙන්
+              පැවරුම් ආහාර සහ සත්‍යයේ සාදන්නා වර්ග සම්බන්ධව විශ්වාසයක් අර්ථ වේ.
+              ප්‍රමාණවත් ප්‍රමාණවත්, බේක්ෂිකාව, සහ උපාංග වැනි ගුණාත්මක
+              ප්‍රතිශතයන් සඳහා පරිදි නිර්ණායෙන් සහාය වේ. සවිකිරීම් සිදු වේ,
+              ස්ථාපිත ආහාර අංකුර, වර්ගීක සිටීම්, ස්ථාවර ව්‍යාකෘති සහ උපාංග
+              සැලැස්ම සහාය වේ.
+            </p>
+            <p className="text-gray-700 mt-4 text-xl">
+              {video.description}
+              Fluid mechanics is the study of how fluids behave under various
+              conditions, encompassing the motion and equilibrium of liquids and
+              gases. It examines properties like density, viscosity, and
+              pressure, along with phenomena such as flow patterns, forces on
+              boundaries, and the interaction between fluids and solid surfaces.
+            </p>
+          </div>
         </div>
         <div className="w-full md:w-1/3">
           {/* List of Next Videos */}
@@ -75,7 +93,7 @@ function VideoPlayer() {
           <ul className="divide-y divide-gray-300">
             {/* Example next video items */}
             {sortedTitles.map((videotitle) => (
-              <li className="py-2">
+              <li className="py-2 transform motion-safe:hover:scale-110 duration-300">
                 <a
                   href="#"
                   className="flex items-center gap-2"
@@ -98,7 +116,7 @@ function VideoPlayer() {
           <ul className="divide-y divide-gray-300">
             {/* Example next video items */}
             {quiz.map((quiztitle) => (
-              <li className="py-2">
+              <li className="py-2 transform motion-safe:hover:scale-110 duration-300">
                 <a
                   href="#"
                   className="flex items-center gap-2"

@@ -10,16 +10,17 @@ import Youtube from "./components/Youtube";
 import Video from "./components/Video";
 import Gradient from "./components/Gradient";
 import Register from "./components/Resgister";
-import VideoPlayer from "./components/VideoPlayer";
+import VideoPlayer from "./components/videoPlayer/VideoPlayer";
 import CoursePage from "./components/Courses";
 import { Routes, Route } from "react-router-dom";
 import PageNotFound from "./components/PageNotFound";
 import LandingPage from "./components/home/LandingPAge";
-import Lessonpage from "./components/Lessonpage";
+import Lessonpage from "./components/LessonPage/Lessonpage";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth3";
 import Unauthorized from "./components/Unauthorized";
 import RequireAuth5 from "./components/gpt";
+import VideoPage from "./components/videoPlayer/VideoPage";
 //function before function
 //function()
 
@@ -45,10 +46,10 @@ function App() {
           <Route element={<RequireAuth5 allowedRoles={[2000]} />}>
             <Route path="/lesson" element={<Lessonpage />} />
             <Route path="lesson/:lessonID" element={<CoursePage />} />
-            <Route path="course/:courseID" element={<VideoPlayer />} />
+            {/* <Route path="course/:courseID" element={<VideoPlayer />} /> */}
             <Route
               path="lesson/:lessonID/course/:courseID"
-              element={<VideoPlayer />}
+              element={<VideoPage />}
             />
           </Route>
         </Route>
