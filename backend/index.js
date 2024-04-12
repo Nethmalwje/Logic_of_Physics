@@ -93,7 +93,7 @@ app.get("/abc", requireAuth, async (req, res) => {
   console.log(result);
   res
     .status(200)
-    .json({ message: "Login successful", loggedIn: true, roles: [2001] });
+    .json({ message: "Login successful", loggedIn: true, roles: [2000] });
   // res.send("connected to backend");
   console.log("headers", req.headers);
   console.log("Authentication", req.isAuthenticated());
@@ -133,7 +133,7 @@ app.post("/login", passport.authenticate("local"), (req, res) => {
   res
     .status(200)
     .cookie("connect.sid", req.sessionID, { httpOnly: true }) // Set the session cookie
-    .send({ message: "Login successful", loggedIn: true, roles: [2001] });
+    .send({ message: "Login successful", loggedIn: true, roles: [2000] });
   console.log(req.session);
 });
 
