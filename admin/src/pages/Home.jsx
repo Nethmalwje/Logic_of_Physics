@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Form from "../Components/Form";
+import Youtube from "../Components/Youtube";
+import Feedbacklist from "../Components/Feedbacklist";
+import About from "../Components/About";
+import Footer from "../Components/Footer";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -94,6 +98,12 @@ const Home = () => {
       <div>
         <Form/>
       </div>
+
+      <div><Youtube/></div>
+
+      <div><Feedbacklist/></div>
+
+      <div><Footer/></div>
 
       
     </div>
